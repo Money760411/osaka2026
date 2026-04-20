@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大阪瘋 2026｜超詳細行程表</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans TC',-apple-system,sans-serif;background:#f0f2f8;color:#1a1a2e;font-size:14px;line-height:1.6}
+
+  /* ── PRINT ── */
+  @media print{
+    .no-print{display:none!important}
+    body{background:white;font-size:12px}
+    .section{break-inside:avoid;page-break-inside:avoid}
+    a{color:#1a1a2e;text-decoration:none}
+    .map-link::after{content:" (Google Maps)";font-size:10px;color:#888}
+  }
+
+  /* ── HEADER ── */
+  .hero{background:linear-gradient(135deg,#0a1628 0%,#0d3b7a 40%,#1565c0 70%,#f5a623 100%);color:white;padding:40px 20px 32px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'🎢';position:absolute;right:-10px;top:10px;font-size:8rem;opacity:0.12}
+  .hero::after{content:'🌍';position:absolute;left:-10px;bottom:10px;font-size:6rem;opacity:0.10}
+  .hero-label{font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;color:#7fb3f5;margin-bottom:8px}
+  .hero h1{font-size:2.4rem;font-weight:900;letter-spacing:2px}
+  .hero-sub{color:#90b4e8;font-size:0.9rem;margin-top:6px}
+  .hero-meta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+  .hero-badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:6px 16px;font-size:0.82rem;color:#ffd166;font-weight:600;backdrop-filter:blur(4px)}
+
+  /* ── NAV ── */
+  .nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-bottom:1px solid #e5e7eb;padding:10px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{flex-shrink:0;padding:6px 14px;border-radius:20px;text-decoration:none;font-size:0.78rem;font-weight:600;color:#666;background:#f3f4f6;transition:all .2s;white-space:nowrap}
+  .nav a:hover,.nav a.active{background:#0f3460;color:white}
+
+  /* ── WRAPPER ── */
+  .wrap{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+
+  /* ── SECTION ── */
+  .section{margin-bottom:28px}
+  .section-title{font-size:1.1rem;font-weight:900;color:#0f3460;border-left:4px solid #e63946;padding-left:12px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+  /* ── CARDS ── */
+  .card{background:white;border-radius:16px;padding:18px 20px;margin-bottom:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
+  .card-sm{background:white;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,0.06)}
+
+  /* ── HOTEL CARDS ── */
+  .hotel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:600px){.hotel-grid{grid-template-columns:1fr}}
+  .hotel-card{background:white;border-radius:14px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,0.08);border-top:4px solid #7c3aed}
+  .hotel-name{font-size:1rem;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+  .hotel-dates{font-size:0.78rem;color:#7c3aed;font-weight:600;background:#f5f3ff;display:inline-block;padding:2px 10px;border-radius:10px;margin-bottom:10px}
+  .hotel-info{font-size:0.82rem;color:#555;line-height:1.8}
+  .hotel-info span{display:block}
+
+  /* ── DAY HEADER ── */
+  .day-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding:16px 18px;background:white;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,0.07)}
+  .day-num{width:56px;height:56px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;font-weight:900;flex-shrink:0}
+  .day-num .n{font-size:1.6rem;line-height:1}
+  .day-num .d{font-size:0.55rem;letter-spacing:1px;opacity:.8}
+  .day-title{font-size:1rem;font-weight:700;color:#1a1a2e}
+  .day-sub{font-size:0.78rem;color:#888;margin-top:2px}
+  .day-budget{font-size:0.78rem;font-weight:700;color:white;background:#d97706;padding:3px 10px;border-radius:10px;margin-top:6px;display:inline-block}
+
+  /* ── TIMELINE ── */
+  .timeline{position:relative}
+  .tl-item{display:flex;gap:10px;margin-bottom:0;position:relative}
+  .tl-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+  .tl-dot{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;z-index:1}
+  .tl-line{width:2px;background:linear-gradient(to bottom,#e0e0e0,#f0f0f0);flex:1;min-height:12px}
+  .tl-item:last-child .tl-line{display:none}
+  .tl-card{flex:1;background:white;border-radius:12px;padding:11px 14px;margin-bottom:8px;box-shadow:0 1px 6px rgba(0,0,0,0.06);border-left:3px solid transparent}
+  .tl-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  .tl-name{font-weight:600;font-size:0.88rem;color:#1a1a2e;flex:1}
+  .tl-time{font-size:0.72rem;color:white;background:#94a3b8;padding:2px 8px;border-radius:8px;font-weight:600;white-space:nowrap;flex-shrink:0}
+  .tl-note{font-size:0.78rem;color:#666;margin-top:6px;line-height:1.5}
+  .tl-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center}
+  .tl-tag{font-size:0.68rem;padding:2px 8px;border-radius:8px;font-weight:600}
+  .map-link{font-size:0.68rem;padding:2px 8px;border-radius:8px;background:#e8f5e9;color:#2e7d32;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:3px;transition:all .15s}
+  .map-link:hover{background:#34a853;color:white}
+
+  /* TYPE COLORS */
+  .t-flight{border-left-color:#60a5fa}.t-flight .tl-dot{background:#eff6ff;color:#2563eb}.t-flight .tl-time{background:#2563eb}
+  .t-hotel{border-left-color:#a78bfa}.t-hotel .tl-dot{background:#f5f3ff;color:#7c3aed}.t-hotel .tl-time{background:#7c3aed}
+  .t-transport{border-left-color:#94a3b8}.t-transport .tl-dot{background:#f8fafc;color:#64748b}.t-transport .tl-time{background:#64748b}
+  .t-food{border-left-color:#f472b6}.t-food .tl-dot{background:#fdf2f8;color:#db2777}.t-food .tl-time{background:#db2777}
+  .t-shop{border-left-color:#34d399}.t-shop .tl-dot{background:#ecfdf5;color:#059669}.t-shop .tl-time{background:#059669}
+  .t-sight{border-left-color:#fbbf24}.t-sight .tl-dot{background:#fffbeb;color:#d97706}.t-sight .tl-time{background:#d97706}
+  .t-nature{border-left-color:#4ade80}.t-nature .tl-dot{background:#f0fdf4;color:#16a34a}.t-nature .tl-time{background:#16a34a}
+
+  .tag-dur{background:#f1f5f9;color:#475569}
+  .tag-cost{background:#fef3c7;color:#92400e}
+  .tag-warn{background:#fef2f2;color:#ef4444}
+  .tag-tip{background:#eff6ff;color:#1e40af}
+
+  /* ── TRANSPORT ROW ── */
+  .transport-row{background:#f8fafc;border-radius:10px;padding:10px 14px;margin:4px 0 8px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.8rem;border:1px dashed #cbd5e1}
+  .transport-row span{color:#475569}
+  .transport-row strong{color:#1a1a2e}
+
+  /* ── DAILY EXPENSE TABLE ── */
+  .exp-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+  .exp-table th{background:#0f3460;color:white;padding:8px 12px;text-align:left;font-weight:600}
+  .exp-table td{padding:8px 12px;border-bottom:1px solid #f3f4f6}
+  .exp-table tr:last-child td{border-bottom:none;font-weight:700;background:#fffbeb}
+  .exp-table tr:hover td{background:#f8fafc}
+  .amount{text-align:right;font-variant-numeric:tabular-nums}
+
+  /* ── NOTICE / TIP ── */
+  .notice{display:flex;align-items:flex-start;gap:8px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:0.8rem;color:#92400e;line-height:1.5}
+  .tip{display:flex;align-items:flex-start;gap:8px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:0.8rem;color:#1e40af;line-height:1.5}
+
+  /* ── CHECKLIST ── */
+  .checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:600px){.checklist-grid{grid-template-columns:1fr}}
+  .check-group{background:white;border-radius:12px;padding:14px 16px;box-shadow:0 1px 6px rgba(0,0,0,0.06)}
+  .check-group h4{font-size:0.85rem;font-weight:700;color:#0f3460;margin-bottom:10px;border-bottom:1px solid #f3f4f6;padding-bottom:6px}
+  .check-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:0.82rem;color:#374151;border-bottom:1px dashed #f9fafb;cursor:pointer;user-select:none}
+  .check-item:last-child{border-bottom:none}
+  .check-item input[type=checkbox]{width:16px;height:16px;accent-color:#0f3460;cursor:pointer;flex-shrink:0}
+  .check-item label{cursor:pointer;flex:1}
+
+  /* ── PRACTICAL INFO ── */
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:600px){.info-grid{grid-template-columns:1fr}}
+  .info-card{background:white;border-radius:12px;padding:14px 16px;box-shadow:0 1px 6px rgba(0,0,0,0.06)}
+  .info-card h4{font-size:0.85rem;font-weight:700;color:#0f3460;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .info-row{font-size:0.8rem;color:#374151;padding:4px 0;border-bottom:1px solid #f9fafb;line-height:1.6}
+  .info-row:last-child{border-bottom:none}
+  .info-row strong{color:#1a1a2e}
+
+  /* ── GRAND TOTAL ── */
+  .grand-total{background:linear-gradient(135deg,#0f3460,#1a1a2e);color:white;border-radius:16px;padding:20px 24px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(15,52,96,0.3)}
+  .gt-label{font-size:0.88rem;opacity:.75;font-weight:500}
+  .gt-nums{display:flex;gap:28px;flex-wrap:wrap}
+  .gt-item .amt{font-size:1.5rem;font-weight:900;color:#ffd166}
+  .gt-item .cur{font-size:0.68rem;opacity:.65;margin-top:2px}
+
+  /* ── FOOTER ── */
+  footer{text-align:center;padding:20px;font-size:0.75rem;color:#9ca3af;background:white;border-top:1px solid #f3f4f6;margin-top:20px}
+
+  /* ── D color ── */
+  .d1-bg{background:linear-gradient(135deg,#e63946,#c1121f)}
+  .d2-bg{background:linear-gradient(135deg,#e76f51,#d4522a)}
+  .d3-bg{background:linear-gradient(135deg,#2a9d8f,#1a7a6e)}
+  .d4-bg{background:linear-gradient(135deg,#457b9d,#2d6080)}
+  .d5-bg{background:linear-gradient(135deg,#6a4c93,#4e3570)}
+
+  /* ── MOBILE APP SHELL ── */
+  body{padding-bottom:72px}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #e5e7eb;display:flex;height:62px;z-index:300;box-shadow:0 -4px 16px rgba(0,0,0,0.10);padding-bottom:env(safe-area-inset-bottom)}
+  .bn-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:none;border:none;cursor:pointer;font-family:inherit;color:#9ca3af;transition:color .2s;padding:6px 0;-webkit-tap-highlight-color:transparent}
+  .bn-btn.active{color:#1565c0}
+  .bn-btn .bn-icon{font-size:1.25rem;line-height:1}
+  .bn-btn .bn-label{font-size:0.58rem;font-weight:700;letter-spacing:0.5px}
+
+  /* ── DAY SELECTOR ── */
+  .day-selector{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:10px 14px;background:rgba(255,255,255,0.97);border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:50;backdrop-filter:blur(8px)}
+  .day-selector::-webkit-scrollbar{display:none}
+  .ds-btn{flex-shrink:0;padding:6px 16px;border-radius:20px;border:none;background:#f3f4f6;color:#666;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;-webkit-tap-highlight-color:transparent}
+  .ds-btn.active{background:#1565c0;color:white}
+
+  /* ── MAP BUTTON ── */
+  .map-link{display:inline-flex;align-items:center;gap:4px;background:#e8f5e9;color:#2e7d32;border:1.5px solid #a5d6a7;border-radius:20px;padding:5px 14px;font-size:0.73rem;font-weight:700;text-decoration:none;transition:all .15s;-webkit-tap-highlight-color:transparent}
+  .map-link:hover,.map-link:active{background:#2e7d32;color:white;border-color:#2e7d32}
+  .map-link::after{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Family Travel Plan · 7 Adults</div>
+  <h1>大阪瘋 2026</h1>
+  <div class="hero-meta">
+    <span class="hero-badge">✈️ 2026 / 05.30 → 06.03</span>
+    <span class="hero-badge">👨‍👩‍👧‍👦 7位大人</span>
+    <span class="hero-badge">🗓 5天4夜</span>
+  </div>
+</div>
+
+<!-- ═══ TAB：航班 ═══ -->
+<div class="tab-panel" id="panel-flights">
+<div class="wrap">
+<!-- ═══ 航班資訊 ═══ -->
+<div class="section" id="flights">
+  <div class="section-title">✈️ 航班資訊</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="card-sm" style="border-top:4px solid #2563eb">
+      <div style="font-size:0.7rem;color:#2563eb;font-weight:700;letter-spacing:2px;margin-bottom:6px">去程 OUTBOUND</div>
+      <div style="font-size:1rem;font-weight:700">長榮航空 BR178</div>
+      <div style="font-size:0.82rem;color:#555;margin-top:6px;line-height:1.8">
+        📅 2026年5月30日（六）<br>
+        🛫 桃園國際機場 <span style="background:#2563eb;color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:8px">第二航廈 T2</span> <strong>06:30（台灣時間 TST）</strong> 出發<br>
+        🛬 關西國際機場 <span style="background:#2563eb;color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:8px">第一航廈 T1 南</span> <strong>10:10（日本時間 JST）</strong> 抵達<br>
+        ⏱ 飛行時間：約2小時40分（時差 +1小時）<br>
+        ⚠️ 建議 <strong>04:30</strong> 到機場辦登機
+      </div>
+    </div>
+    <div class="card-sm" style="border-top:4px solid #2563eb">
+      <div style="font-size:0.7rem;color:#2563eb;font-weight:700;letter-spacing:2px;margin-bottom:6px">回程 RETURN</div>
+      <div style="font-size:1rem;font-weight:700">長榮航空 BR129</div>
+      <div style="font-size:0.82rem;color:#555;margin-top:6px;line-height:1.8">
+        📅 2026年6月3日（三）<br>
+        🛫 關西國際機場 <span style="background:#2563eb;color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:8px">第一航廈 T1 南</span> <strong>18:30（日本時間 JST）</strong> 出發<br>
+        🛬 桃園國際機場 <span style="background:#2563eb;color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:8px">第二航廈 T2</span> <strong>20:30（台灣時間 TST）</strong> 抵達<br>
+        ⏱ 飛行時間：約3小時（時差 -1小時）<br>
+        ⚠️ 建議 <strong>16:00</strong> 前抵達機場
+      </div>
+    </div>
+  </div>
+  <div class="tip">💡 KIX T1 南側入境後，請先到「ICOCA 服務台」或自動售票機購買/儲值 ICOCA 卡，每人儲值 ¥5,000 可用3–4天。</div>
+</div>
+
+</div></div><!-- end panel-flights -->
+
+<!-- ═══ TAB：住宿 ═══ -->
+<div class="tab-panel" id="panel-hotels">
+<div class="wrap">
+<!-- ═══ 住宿資訊 ═══ -->
+<div class="section" id="hotels">
+  <div class="section-title">🏨 住宿資訊</div>
+  <div class="hotel-grid">
+    <div class="hotel-card">
+      <div class="hotel-name">Comforts+81 Dotonbori</div>
+      <div class="hotel-dates">5/30（六）→ 6/1（一）｜2晚</div>
+      <div class="hotel-info">
+        <span>📍 大阪市中央区道頓堀1-7-24</span>
+        <span>🚇 地鐵難波站 步行5分</span>
+        <span>🔑 訂單：#1668229486</span>
+        <span>⏰ Check-in：15:00 後</span>
+        <span>⏰ Check-out：11:00 前</span>
+        <span>💰 住宿費用：¥118,625（2晚）</span>
+      </div>
+      <div style="margin-top:10px">
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Comforts81+Dotonbori+Osaka" target="_blank">📍 Google Maps</a>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <div class="hotel-name">The Park Front Hotel at USJ</div>
+      <div class="hotel-dates">6/1（一）→ 6/3（三）｜2晚</div>
+      <div class="hotel-info">
+        <span>📍 大阪市此花区島屋2-1-33</span>
+        <span>🚇 JR ユニバーサルシティ駅 步行11分</span>
+        <span>🔑 訂單：#IK1572900408 / #IK1572895476</span>
+        <span>⏰ Check-in：15:00 後</span>
+        <span>⏰ Check-out：11:00 前</span>
+        <span>💰 住宿費用：四人房¥57,600＋三人房¥48,600＝¥106,200（2晚）</span>
+      </div>
+      <div style="margin-top:10px">
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=The+Park+Front+Hotel+Universal+Studios+Japan+Osaka" target="_blank">📍 Google Maps</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div></div><!-- end panel-hotels -->
+
+<!-- ═══ TAB：每日行程 ═══ -->
+<div class="tab-panel active" id="panel-schedule">
+<div class="day-selector">
+  <button class="ds-btn active" onclick="scrollDay('day1',this)">📍 Day 1</button>
+  <button class="ds-btn" onclick="scrollDay('day2',this)">Day 2</button>
+  <button class="ds-btn" onclick="scrollDay('day3',this)">Day 3</button>
+  <button class="ds-btn" onclick="scrollDay('day4',this)">Day 4 USJ</button>
+  <button class="ds-btn" onclick="scrollDay('day5',this)">Day 5</button>
+</div>
+<div class="wrap">
+<!-- ═══ DAY 1 ═══ -->
+<div class="section" id="day1">
+  <div class="day-header">
+    <div class="day-num d1-bg"><span class="n">1</span><span class="d">DAY</span></div>
+    <div>
+      <div class="day-title">難波・心齋橋・道頓堀</div>
+      <div class="day-sub">05/30（六）｜住宿：Comforts+81 Dotonbori</div>
+      <div class="day-budget">當日預估：¥8,000–12,000／人</div>
+    </div>
+  </div>
+
+  <div class="notice">⚠️ 凌晨就要出發，長輩當天以「輕鬆」為主，品牌逛街可移至其他天。晚餐後建議 22:00 前回飯店休息。</div>
+  <div class="tip">💡 行李可先在飯店寄放，下午 15:00 後辦 Check-in。ICOCA 卡在機場買，7人各買一張。</div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-flight">✈️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-flight">
+        <div class="tl-card-top"><span class="tl-name">桃園國際機場 T2 集合出發</span><span class="tl-time">04:30</span></div>
+        <div class="tl-note">BR178｜建議 04:30 到機場，06:50 起飛</div>
+        <div class="tl-meta"><span class="tl-tag tag-tip">機票已訂</span></div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-flight">🛬</div><div class="tl-line"></div></div>
+      <div class="tl-card t-flight">
+        <div class="tl-card-top"><span class="tl-name">關西國際機場 KIX T1 南 抵達</span><span class="tl-time">10:10</span></div>
+        <div class="tl-note">入境審查→行李提取→購買/儲值 ICOCA 卡（7人各一張）→換日幣（機場匯率稍差，建議台灣先換好）</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-cost">ICOCA ¥500押金＋¥5,000儲值＝¥5,500/人</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚌</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">關西機場 → 難波（利木津巴士）</span><span class="tl-time">10:45</span></div>
+        <div class="tl-note">在到達大廳搭乘「Airport Limousine Bus」往難波OCAT，約60分鐘</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約60分</span>
+          <span class="tl-tag tag-cost">¥1,800/人</span>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Kansai+International+Airport&destination=Namba+OCAT+Osaka&travelmode=transit" target="_blank">📍 路線</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-hotel">🏨</div><div class="tl-line"></div></div>
+      <div class="tl-card t-hotel">
+        <div class="tl-card-top"><span class="tl-name">Comforts+81 Dotonbori 寄放行李</span><span class="tl-time">12:00</span></div>
+        <div class="tl-note">Check-in 15:00 後，先寄放行李輕裝出發。飯店在道頓堀步行圈內。</div>
+        <div class="tl-meta"><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Comforts81+Dotonbori+Osaka" target="_blank">📍 地圖</a></div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍜</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">午餐｜自由軒 難波本店</span><span class="tl-time">12:15</span></div>
+        <div class="tl-note">大阪咖哩飯老舖（1910年創業）！名物カレー將生蛋打在咖哩中央，攪拌後享用，超有歷史感。空間舒適、坐著慢慢吃，長輩友善。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分</span>
+          <span class="tl-tag tag-cost">¥900–1,200/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=自由軒+難波本店" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">⛩️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">難波八阪神社</span><span class="tl-time">13:15</span></div>
+        <div class="tl-note">大阪在地人信仰的古老神社，創建已超過1,350年歷史！最大亮點是巨型「獅子殿」——高11公尺的巨大獅子口造型舞台，口中設有能容納1,500人的表演廣場，從正面看宛如巨獸即將將人吞噬，是大阪最衝擊視覺的打卡景點之一！據說面向獅口方向許願，可驅走惡運、招來好運。境內另有稻荷社、幸神社等多座小祠，氛圍神秘悠靜。免費參觀，距離飯店步行約10分鐘，難波必去隱藏名所。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 30分</span>
+          <span class="tl-tag tag-cost">免費</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=難波八阪神社+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-shop">🛒</div><div class="tl-line"></div></div>
+      <div class="tl-card t-shop">
+        <div class="tl-card-top"><span class="tl-name">Edion 愛電王 難波總店</span><span class="tl-time">13:50</span></div>
+        <div class="tl-note">家電、3C 採購，免稅手續需出示護照</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 2小時</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=エディオン+難波+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍮</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">下午茶｜MooKEN モーケン 大阪最強小泡芙</span><span class="tl-time">16:55</span></div>
+        <div class="tl-note">大阪人氣泡芙名店！外皮酥脆、內餡濃郁，口味多樣，現點現做。邊走邊吃或找位子享用，長輩小孩都愛！</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 20分</span>
+          <span class="tl-tag tag-cost">¥200–400/個</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=MooKEN+モーケン+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-hotel">🏨</div><div class="tl-line"></div></div>
+      <div class="tl-card t-hotel">
+        <div class="tl-card-top"><span class="tl-name">Comforts+81 Dotonbori Check-in</span><span class="tl-time">17:20</span></div>
+        <div class="tl-note">取回行李、辦入住、整理休息30分（長輩可稍微休息）</div>
+        <div class="tl-meta"><span class="tl-tag tag-dur">⏱ 休息30分</span></div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-shop">🛍️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-shop">
+        <div class="tl-card-top"><span class="tl-name">品牌逛街｜心齋橋・堀江</span><span class="tl-time">17:30 – 19:30</span></div>
+        <div class="tl-note">
+          【長輩】可在飯店休息或在心齋橋周邊慢慢逛藥妝。<br>
+          【年輕人】衝品牌！建議動線：心齋橋 → 堀江區<br><br>
+          🔴 <strong>Supreme Osaka</strong>　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Supreme+Osaka+心斎橋" target="_blank">📍 地圖</a><br><br>
+          🔴 <strong>Maison Miharayasuhiro</strong>　<span style="background:#fef2f2;color:#ef4444;font-size:0.68rem;padding:1px 5px;border-radius:4px">堀江區</span>　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Maison+Miharayasuhiro+大阪+堀江" target="_blank">📍 地圖</a><br><br>
+          🔴 <strong>THE NORTH FACE Horie Store</strong>　<span style="background:#fef2f2;color:#ef4444;font-size:0.68rem;padding:1px 5px;border-radius:4px">⚠️ 20:00關</span>　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=The+North+Face+Horie+Store+大阪" target="_blank">📍 地圖</a><br><br>
+          🔴 <strong>BEAMS Plus 大阪</strong>　<span style="background:#fef2f2;color:#ef4444;font-size:0.68rem;padding:1px 5px;border-radius:4px">⚠️ 20:00關</span>　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=BEAMS+Plus+大阪" target="_blank">📍 地圖</a><br><br>
+          🔴 <strong>HOKA Osaka Shinsaibashi</strong>　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=HOKA+Osaka+Shinsaibashi" target="_blank">📍 地圖</a><br><br>
+          🔴 <strong>HUMAN MADE Shinsaibashi PARCO</strong>　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=HUMAN+MADE+Shinsaibashi+PARCO+大阪" target="_blank">📍 地圖</a><br><br>
+          🔴 <strong>Nike Store 心齋橋</strong>　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Nike+Store+心斎橋+大阪" target="_blank">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約2小時</span>
+          <span class="tl-tag tag-warn">⚠️ North Face、BEAMS 20:00關，要早去</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=心斎橋+大阪" target="_blank">📍 心齋橋地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🥩</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">晚餐｜北むら（すき焼き 北むら）</span><span class="tl-time">18:00</span></div>
+        <div class="tl-note">1881年創業！大阪心齋橋殿堂級壽喜燒老舖。傳統關西風壽喜燒，不用割り下醬汁，以砂糖＋醬油直接調味，搭配嚴選黑毛和牛，風味層次絕佳。⚠️ 7人務必提前預約，並詢問是否有椅子座位（長輩友善）。<br><br>
+          🔁 <strong>備案一｜SHABUCHO（しゃぶちょ）</strong>　人氣涮涮鍋名店，和牛涮涮鍋湯頭鮮美、肉質細嫩，適合一家人圍鍋共享，氣氛輕鬆，長輩友善，約¥5,000–8,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=SHABUCHO+しゃぶちょ+大阪+難波" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案二｜はり重（HARI重）</strong>　1918年創業的大阪老舖，以頂級黑毛和牛聞名，百年秘方醬汁風味絕佳，是大阪壽喜燒的另一殿堂級選擇，約¥12,000–18,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=はり重+難波+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案三｜なるとや</strong>　大阪人氣串燒居酒屋，串燒種類豐富、炭火香氣十足，配啤酒絕配，氣氛熱鬧，適合一家人乾杯慶祝第一夜！約¥3,000–5,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=なるとや+大阪+難波" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案四｜バッテン よかとぉ（Batten Yokato）</strong>　來自福岡博多的串燒居酒屋，博多風串燒＋九州料理，氣氛熱鬧道地，心齋橋店＆裏難波店皆可選，約¥3,000–5,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=バッテンよかとぉ+心斎橋+大阪" target="_blank">📍 心齋橋店</a>　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=バッテンよかとぉ+裏難波+大阪" target="_blank">📍 裏難波店</a><br><br>
+          🔁 <strong>備案五｜Sakana no Ishisaka（炭焼き炉端 魚の石坂）</strong>　心齋橋新開海鮮爐端燒居酒屋，炭火烤海鮮＋精選日本酒＋おでん，有半包廂座位，喜歡吃魚的家庭首選，約¥4,000–6,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=炭焼き炉端+魚の石坂+心斎橋+大阪" target="_blank">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1.5小時</span>
+          <span class="tl-tag tag-cost">¥10,000–12,000/人</span>
+          <span class="tl-tag tag-warn">⚠️ 需提前預約</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=北むら+心斎橋+すき焼き+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🌃</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">道頓堀夜景散步＋藥妝採購</span><span class="tl-time">19:45</span></div>
+        <div class="tl-note">
+          格力高跑跑人看板、蟹道樂、戎橋，步行範圍內輕鬆拍照。<br>散步途中順路掃藥妝，心齋橋筋580公尺內藥妝店超密集！<br><br>
+          🏪 <strong>推薦藥妝店</strong><br>
+          💊 <strong>松本清</strong>　品項最齊全，寬敞好逛　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=マツモトキヨシ+心斎橋+大阪" target="_blank">📍 地圖</a><br>
+          💊 <strong>SUGI藥局 道頓堀東店</strong>　24小時營業，深夜也能逛　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=SUGI薬局+道頓堀+大阪" target="_blank">📍 地圖</a><br>
+          💊 <strong>OS DRUG</strong>　大阪在地，傳說中最便宜　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=OSドラッグ+心斎橋+大阪" target="_blank">📍 地圖</a><br>
+          💊 <strong>唐吉訶德 道頓堀店</strong>　滿¥10,000折5%、滿¥30,000折7%，加免稅最划算！24小時　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ドンキホーテ+道頓堀+大阪" target="_blank">📍 地圖</a><br><br>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1–2小時</span>
+          <span class="tl-tag tag-tip">💡 記得帶護照辦免稅</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=道頓堀+格力高+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-hotel">🏨</div><div class="tl-line"></div></div>
+      <div class="tl-card t-hotel">
+        <div class="tl-card-top"><span class="tl-name">回飯店休息（長輩友善時間）</span><span class="tl-time">22:00</span></div>
+        <div class="tl-note">今日凌晨出發，飛行＋遊覽已很疲憊。年輕人可繼續逛心齋橋品牌，長輩先回休息。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ DAY 2 ═══ -->
+<div class="section" id="day2">
+  <div class="day-header">
+    <div class="day-num d2-bg"><span class="n">2</span><span class="d">DAY</span></div>
+    <div>
+      <div class="day-title">箕面勝尾寺・梅田</div>
+      <div class="day-sub">05/31（日）｜住宿：Comforts+81 Dotonbori</div>
+      <div class="day-budget">當日預估：¥6,000–8,000／人</div>
+    </div>
+  </div>
+
+  <div class="tip">💡 箕面萱野站→勝尾寺可搭北大阪急行バス，回程搭阪急直達梅田。長輩可在梅田阪急一帶悠閒逛，不必撐到深夜。</div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">☕</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">早餐｜Tully's Coffee 近鐵難波店</span><span class="tl-time">08:00</span></div>
+        <div class="tl-note">Royal Milk Tea 或鬆餅，悠閒早餐</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1小時</span>
+          <span class="tl-tag tag-cost">¥500–800/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Tullys+Coffee+難波+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚇</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">難波 → 箕面萱野（阪急・北大阪急行）</span><span class="tl-time">09:05</span></div>
+        <div class="tl-note">難波→梅田（御堂筋線 ¥230）→ 梅田から阪急乗換→箕面萱野（約40分）</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約50分</span>
+          <span class="tl-tag tag-cost">¥460/人（ICOCA）</span>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=難波駅&destination=箕面萱野駅&travelmode=transit" target="_blank">📍 路線</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚌</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">箕面萱野駅 → 勝尾寺（計程車）</span><span class="tl-time">10:05</span></div>
+        <div class="tl-note">7人需搭2台計程車，約10–15分鐘直達，比巴士舒適快速，長輩友善。可在車站前排班計程車乘車處搭乘。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約15分</span>
+          <span class="tl-tag tag-cost">¥2,000–3,000/台（共2台）</span>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=箕面萱野駅&destination=勝尾寺+大阪&travelmode=driving" target="_blank">📍 路線</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-nature">⛩️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-nature">
+        <div class="tl-card-top"><span class="tl-name">勝尾寺</span><span class="tl-time">10:30</span></div>
+        <div class="tl-note">創建於西元727年的千年古剎，以「勝運祈願」聞名全日本！境內數千個大小不一的紅色「勝ちダルマ（達摩不倒翁）」遍布各個角落——石燈籠上、神龕旁、樹梢間，壯觀至極，是日本最獨特的寺廟景觀之一。相傳在此祈求勝運，考試、比賽、商業皆能必勝，是關西考生、運動選手的必訪聖地。境內空氣清新，林木蓊鬱，宛如森林浴。有緩坡石階，長輩請穿防滑鞋慢慢欣賞即可，沿途風景怡人不必趕。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 2.5–3小時</span>
+          <span class="tl-tag tag-cost">門票 ¥400/人</span>
+          <span class="tl-tag tag-warn">⚠️ 有石階，長輩慢行</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=勝尾寺+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍱</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">午餐｜勝尾寺境內茶屋</span><span class="tl-time">13:00</span></div>
+        <div class="tl-note">參拜完直接在山門旁茶屋用餐，不用移動，長輩最輕鬆。提供烏龍麵、甘酒、茶點等簡單日式輕食，邊休息邊欣賞寺院氛圍。<br><br>
+          🔖 <strong>備案一｜鶏soba 座銀（雞湯拉麵）</strong><br>
+          鹿兒島桜島雞白湯湯底，加魚介高湯與白醬油，濃郁細膩。名物炸牛蒡配料一絕。回梅田後步行可達肥後橋本店。鶏soba ¥800，加肉寿司 ¥1,380。<br>
+          <a href="https://www.google.com/maps/search/?api=1&query=鶏soba+座銀+大阪" target="_blank" style="color:#2563eb;font-size:0.82rem">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分</span>
+          <span class="tl-tag tag-cost">¥500–1,000/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=勝尾寺+茶屋+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚇</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">箕面萱野 → 梅田（阪急直達）</span><span class="tl-time">14:30</span></div>
+        <div class="tl-note">搭阪急直達梅田，約30–35分鐘</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約35分</span>
+          <span class="tl-tag tag-cost">¥310/人</span>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=箕面萱野駅&destination=大阪梅田駅&travelmode=transit" target="_blank">📍 路線</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-shop">🛍️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-shop">
+        <div class="tl-card-top"><span class="tl-name">阪急梅田百貨逛街</span><span class="tl-time">15:15</span></div>
+        <div class="tl-note">
+          日本最大規模百貨之一，長輩可在B2美食街、地下超市慢慢晃。<br><br>
+          🕶️ <strong>GENTLE MONSTER</strong>　韓國設計師眼鏡品牌，裝置藝術感強，逛百貨時順路必看　<a href="https://www.google.com/maps/search/?api=1&query=GENTLE+MONSTER+梅田+阪急" target="_blank" style="color:#2563eb;font-size:0.82rem">📍 地圖</a><br>
+          🍟 <strong>GRAND Calbee</strong>　卡樂比高級版，現做薯條棒、洋芋片禮盒，阪急梅田店限定商品，伴手禮必買　<a href="https://www.google.com/maps/search/?api=1&query=GRAND+Calbee+阪急梅田" target="_blank" style="color:#2563eb;font-size:0.82rem">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1小時</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=阪急梅田百貨+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-shop">🛒</div><div class="tl-line"></div></div>
+      <div class="tl-card t-shop">
+        <div class="tl-card-top"><span class="tl-name">Yodobashi Umeda Tower</span><span class="tl-time">16:20</span></div>
+        <div class="tl-note">家電、玩具、3C 一棟全搞定，開到深夜22:00。建議長輩 19:00 先返難波休息。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 2–5小時</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ヨドバシカメラ+梅田+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍽️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">晚餐｜粂屋 梅田・大丸14F（涮涮鍋・壽喜燒吃到飽）</span><span class="tl-time">18:30</span></div>
+        <div class="tl-note">
+          大丸梅田百貨14樓，國產牛＋豬肉涮涮鍋吃到飽，附烏龍麵、白飯無限取用。搭電梯直達、室內空調，長輩輕鬆舒適。<br><br>
+          🔖 <strong>備案一｜千房 曾根崎店（大阪燒）</strong><br>
+          大阪燒老字號51年，鐵板現做、熱鬧有趣。梅田站步行5分。¥1,500–2,500/人<br>
+          <a href="https://www.google.com/maps/search/?api=1&query=千房+曾根崎+大阪" target="_blank" style="color:#2563eb;font-size:0.82rem">📍 地圖</a><br><br>
+          🔖 <strong>備案二｜きたいち酒場（北海道海鮮居酒屋）</strong><br>
+          北海道11漁港直送，特上こぼれ寿司超澎湃，刺身拼盤超新鮮。梅田站步行3分。¥3,000–4,000/人<br>
+          <a href="https://www.google.com/maps/search/?api=1&query=きたいち酒場+梅田+大阪" target="_blank" style="color:#2563eb;font-size:0.82rem">📍 地圖</a><br><br>
+          🔖 <strong>備案三｜敘敘苑 梅田店（韓式燒肉）</strong><br>
+          日本知名韓式燒肉連鎖，和牛品質穩定，醬料與小菜豐富，氣氛高雅適合家庭聚餐。¥4,000–6,000/人<br>
+          <a href="https://www.google.com/maps/search/?api=1&query=叙々苑+梅田+大阪" target="_blank" style="color:#2563eb;font-size:0.82rem">📍 地圖</a><br><br>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1.5小時</span>
+          <span class="tl-tag tag-cost">¥3,500–5,000/人</span>
+          <span class="tl-tag tag-warn">⚠️ 建議提前訂位</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=粂屋+大丸梅田+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚇</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">梅田 → 難波（御堂筋線）</span><span class="tl-time">19:30 / 21:30</span></div>
+        <div class="tl-note">長輩約 19:30 先走，年輕人約 21:30 返。御堂筋線梅田→難波約5分鐘。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約5分</span>
+          <span class="tl-tag tag-cost">¥230/人</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ DAY 3 ═══ -->
+<div class="section" id="day3">
+  <div class="day-header">
+    <div class="day-num d3-bg"><span class="n">3</span><span class="d">DAY</span></div>
+    <div>
+      <div class="day-title">黑門市場・天王寺・阿倍野・通天閣</div>
+      <div class="day-sub">06/01（一）｜換住：The Park Front Hotel（USJ旁）</div>
+      <div class="day-budget">當日預估：¥5,000–8,000／人</div>
+    </div>
+  </div>
+
+  <div class="notice">⚠️ 今天需換飯店！早上退房後行李先寄放於 Comforts+81，傍晚取行李後再前往 The Park Front Hotel Check-in。</div>
+  <div class="tip">💡 路線規劃：黑門市場（難波）→ 天王寺 → 阿倍野（HARUKAS＋購物）→ 通天閣/新世界 → 回難波取行李 → JR 前往 USJ 周邊 Check-in，順序流暢不繞路！</div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-hotel">🏨</div><div class="tl-line"></div></div>
+      <div class="tl-card t-hotel">
+        <div class="tl-card-top"><span class="tl-name">Comforts+81 Dotonbori 退房＋行李寄放</span><span class="tl-time">08:00</span></div>
+        <div class="tl-note">退房後將行李寄放於飯店前台，輕裝出遊！傍晚前往 The Park Front Hotel 前再回來取行李。</div>
+        <div class="tl-meta"><span class="tl-tag tag-tip">💡 寄放行李免費，取件時記得保留寄放單</span></div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🦐</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">早餐｜黑門市場（くろもん市場）邊逛邊吃</span><span class="tl-time">08:30</span></div>
+        <div class="tl-note">
+          有「大阪廚房」之稱、擁有超過百年歷史的傳統市場，超過170間攤位，海鮮、和牛、水果、關東煮應有盡有！建議早上來，人潮最少、食材最新鮮。<br><br>
+          🦀 <strong>黑門三平</strong>　最人氣海鮮選物店！帝王蟹腳、新鮮海膽、握壽司，設有100席以上座位區，邊選邊現做現吃　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=黒門三平+大阪" target="_blank">📍 地圖</a><br><br>
+          🐟 <strong>黑銀鮪魚屋</strong>　高人氣鮪魚專賣！黑鮪魚前腹肉師傅現切，油脂均勻肉質鮮甜，必吃！　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=黒銀+黒門市場+大阪" target="_blank">📍 地圖</a><br><br>
+          🍢 <strong>石橋食品 關東煮</strong>　百年古法熬湯，早上9點開始營業，每串約¥100，是黑門早餐最平價的選擇！　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=石橋食品+黒門市場+大阪" target="_blank">📍 地圖</a><br><br>
+          🐡 <strong>深廣本店</strong>　百年水產老店，海鮮可現選現做成生魚片或燒烤，附用餐空間，海鮮丼超值划算　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=深廣+黒門市場+大阪" target="_blank">📍 地圖</a><br><br>
+          🍓 <strong>水果攤</strong>　日本頂級水果，草莓、哈密瓜、白桃，可當場試吃後購買，甜度驚人！
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1.5小時</span>
+          <span class="tl-tag tag-cost">¥1,500–3,000/人</span>
+          <span class="tl-tag tag-tip">💡 建議 08:30 前到，多數攤位傍晚 16:00 陸續關門</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=黒門市場+大阪" target="_blank">📍 市場地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚇</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">日本橋 → 四天王寺前夕陽丘（地鐵）</span><span class="tl-time">10:15</span></div>
+        <div class="tl-note">地鐵堺筋線 日本橋 → 天下茶屋，轉谷町線 → 四天王寺前夕陽ケ丘駅，約15分鐘</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約15分</span>
+          <span class="tl-tag tag-cost">¥240/人</span>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=日本橋駅+大阪&destination=四天王寺前夕陽ケ丘駅+大阪&travelmode=transit" target="_blank">📍 路線</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">⛩️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">四天王寺</span><span class="tl-time">10:30</span></div>
+        <div class="tl-note">日本最古老的佛教寺院之一，由聖德太子於西元593年創建，距今超過1,400年歷史！境內有五重塔、金堂、講堂等雄偉建築，迴廊設計為日本佛教建築史上珍貴遺產。每月21日、22日有骨董市集「縁日」，攤販雲集非常熱鬧。境內廣大但動線平坦，全程無障礙，長輩非常友善。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分</span>
+          <span class="tl-tag tag-cost">境內免費｜中心伽藍參觀 ¥300/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=四天王寺+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🌿</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">天王寺公園・慶澤園</span><span class="tl-time">11:20</span></div>
+        <div class="tl-note">大阪市內最大的歷史公園，佔地28公頃，天王寺動物園、慶澤園等皆在其中。慶澤園為1918年建造的池泉回遊式日式庭園，楓樹、松樹環繞池畔，假山疊石倒映水面，靜謐優美，是鬧中取靜的秘境。長輩最愛的悠閒散步好去處，全程平坦無階梯。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 30分</span>
+          <span class="tl-tag tag-cost">慶澤園 ¥150/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=天王寺公園+慶澤園+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍜</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">午餐｜551蓬莱 天王寺MIO店</span><span class="tl-time">12:00</span></div>
+        <div class="tl-note">大阪人的靈魂美食！現蒸豚まん（豬肉包）皮薄餡多、汁水四溢，外帶邊走邊吃或坐下享用皆宜。也有蝦仁燒賣、炒飯套餐，排骨湯暖胃，是最道地的大阪在地體驗。<br><br>
+          🔁 <strong>備案一｜鶴橋 焼肉街</strong>　天王寺搭地鐵一站即達！日本最大韓人街，上百間韓式燒肉密集，和牛、豬五花、内臓燒肉應有盡有，價格比市區便宜一大截，大阪本地人公認燒肉聖地，約¥2,000–4,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=鶴橋+焼肉+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案二｜ぼてじゅう 天王寺MIO店</strong>　大阪燒老字號，鐵板現做、外酥內軟，醬汁＋美乃滋＋柴魚片層次豐富，長輩小孩都愛，約¥1,200–2,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ぼてじゅう+天王寺MIO+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案三｜どうとんぼり 神座（Kameja）</strong>　大阪知名拉麵連鎖！清透醬油湯底搭配白菜甜味，湯頭清爽不膩，老少咸宜，天王寺MIO本館內，約¥900–1,200/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=どうとんぼり神座+天王寺MIO+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案四｜天王寺百楽</strong>　創業60年以上的中式定食老舖，招牌百楽ランチ每天賣出百份以上，白飯無限續碗，長輩友善、CP值超高，約¥1,300/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=天王寺百楽+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案五｜江戸前回転鮨 紀州弥一</strong>　迴轉壽司走精緻路線，本鮪大トロ、活鯛等嚴選食材，那智ランチ10貫澎湃實惠，適合想吃好一點的午餐，約¥1,980/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=紀州弥一+天王寺MIO+大阪" target="_blank">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1小時</span>
+          <span class="tl-tag tag-cost">¥500–1,000/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=551蓬莱+天王寺+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🏙️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">あべのハルカス 300（HARUKAS 觀景台）</span><span class="tl-time">13:10</span></div>
+        <div class="tl-note">午餐吃完就在旁邊，直接走過去！高300公尺的摩天大樓，60樓「HARUKAS 300」觀景台三面玻璃360度全景，晴天可遠眺六甲山、明石海峽大橋，黃昏時分夕陽染紅大阪天際線，景色絕美。電梯從地面直達60樓約1分鐘，全程冷氣室內，對長輩完全友善。大樓內設有近鐵百貨（地下2樓~14樓）、大阪市立美術館等，購物餐飲一應俱全。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分</span>
+          <span class="tl-tag tag-cost">觀景台 ¥2,000/人（建議網路預購）</span>
+          <span class="tl-tag tag-tip">💡 午後入場光線最美，傍晚還能等夕陽</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=あべのハルカス+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-shop">🛍️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-shop">
+        <div class="tl-card-top"><span class="tl-name">あべのハルカス 近鉄本店 ＆ あべのキューズモール 逛街＋採購</span><span class="tl-time">14:00</span></div>
+        <div class="tl-note">
+          觀景台下來直接逛！HARUKAS 同棟就是日本最大級百貨，キューズモール 270 間店舖緊鄰在旁，一家人分頭行動超方便。<br><br>
+          🛒 <strong>近鉄本店 B2 デパ地下</strong>　高級食品、大阪和菓子、各地名產伴手禮選擇最齊全，品質比超市精緻許多，長輩最愛慢慢逛　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=あべのハルカス近鉄本店+大阪" target="_blank">📍 地圖</a><br><br>
+          👗 <strong>キューズモール 快時尚＆雜貨</strong>　UNIQLO、GU、無印良品、LOFT 一棟全搞定，100円均一順手補充旅途用品，頂樓露天廣場還能遠望 HARUKAS<br><br>
+          💎 <strong>近鉄本店 11樓</strong>　珠寶、手錶、眼鏡，想買好東西或看看精品可上來逛<br><br>
+          🎬 <strong>あべのルシアス</strong>　與天王寺站地下連通的複合商場，有電影院與選物店，逛完大家還有力氣的話可以進去繞一圈　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=あべのルシアス+大阪" target="_blank">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分</span>
+          <span class="tl-tag tag-tip">💡 買伴手禮推薦去近鉄デパ地下，日常雜貨去キューズモール</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=あべのキューズモール+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚶</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">阿倍野 → 新世界・通天閣（步行）</span><span class="tl-time">14:50</span></div>
+        <div class="tl-note">從阿倍野往北步行約15分鐘即抵達新世界商圈，沿途可感受大阪南區在地庶民風情</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 15分</span>
+          <span class="tl-tag tag-cost">免費</span>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=あべのハルカス+大阪&destination=通天閣+大阪&travelmode=walking" target="_blank">📍 路線</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🗼</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">通天閣</span><span class="tl-time">15:05</span></div>
+        <div class="tl-note">1912年初代建設、1956年重建的大阪地標，高108公尺，以巴黎艾菲爾鐵塔為設計靈感。5樓頂層展望台可360度俯瞰大阪市景，晴天遠眺六甲山壯闊。1樓入口有保佑金錢運與好運的「比利肯神」（ビリケン），摸他的腳底可祈求心想事成！電梯直達、全程冷氣，對長輩非常友善。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1小時</span>
+          <span class="tl-tag tag-cost">觀景台 ¥1,000/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=通天閣+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍢</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">新世界商圈散步＋串炸</span><span class="tl-time">16:10</span></div>
+        <div class="tl-note">
+          充滿昭和復古風情的商圈，霓虹招牌、復古海報滿街，宛如時光倒流大阪！串炸老店排排站，是大阪最道地的庶民美食體驗。<br><br>
+          🍢 <strong>だるま（達摩）本店</strong>　創業1929年，大阪串炸元祖！豬肉、蝦子、洋蔥炸串酥脆多汁，「醬汁桶不能重複沾」是鐵則（衛生規定），人氣超高須稍等　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=串カツだるま+新世界+大阪" target="_blank">📍 地圖</a><br><br>
+          🍢 <strong>八重勝</strong>　在地人也愛的串炸名店，食材新鮮、麵衣香酥，堂食或外帶皆宜，排隊稍短，價格親民　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=八重勝+新世界+大阪" target="_blank">📍 地圖</a><br><br>
+          🎰 <strong>ジャンジャン横丁</strong>　新世界旁的昭和小巷，將棋館、射擊遊戲、老居酒屋，濃濃懷舊庶民氣息，散步必到　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ジャンジャン横丁+大阪" target="_blank">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分</span>
+          <span class="tl-tag tag-cost">¥500–1,500/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=新世界+大阪" target="_blank">📍 新世界地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚇</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">動物園前 → 難波（取行李）</span><span class="tl-time">17:00</span></div>
+        <div class="tl-note">地鐵御堂筋線 動物園前 → 難波（約3分），回 Comforts+81 取行李後在道頓堀周邊用晚餐，吃完再搭 JR 前往 USJ。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約5分</span>
+          <span class="tl-tag tag-cost">¥200/人</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🦀</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">晚餐｜地焼うなぎ 法善寺 山かづ</span><span class="tl-time">17:30</span></div>
+        <div class="tl-note">法善寺橫丁內的鰻魚名店！關西傳統「地焼き」直火烤法（不蒸），皮脆身軟、鰻香四溢，國產鰻魚品質扎實。鰻重約¥2,000起，招牌「鰻うに重」（鰻魚＋海膽）¥7,150，在大阪老街巷弄中吃鰻魚，氛圍絕佳。⚠️ 建議事前預約。<br><br>
+          🔁 <strong>備案一｜かに道楽 道頓堀本店</strong>　1962年創業，門口巨大螃蟹招牌是大阪地標！全國直送活蟹，かにすき（螃蟹壽喜鍋）鮮甜湯頭，最後雜炊收尾令人難忘，設有和室個室，長輩坐著舒適，7人家庭聚餐最合適，約¥8,000–15,000/人　⚠️ 需提前預約　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=かに道楽+道頓堀+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案二｜磯丸水産 難波店</strong>　24小時海鮮居酒屋，帆立貝、蛤蜊、海老自己動手烤，熱鬧有趣，適合一家人邊烤邊聊！約¥3,000–5,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=磯丸水産+難波+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案三｜銀平 道頓堀店</strong>　和歌山直送鮮魚，生魚片拼盤、鹽烤魚定食品質超高，清爽日式風格，長輩最愛的穩健選擇，約¥3,000–5,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=銀平+道頓堀+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>備案四｜金龍ラーメン 道頓堀店</strong>　24小時營業的大阪代表性拉麵！豚骨湯底香濃，泡菜、韭菜免費加，在地人的靈魂宵夜，想吃輕鬆一點時的最佳選擇，約¥750/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=金龍ラーメン+道頓堀+大阪" target="_blank">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1.5小時</span>
+          <span class="tl-tag tag-cost">¥2,000起</span>
+          <span class="tl-tag tag-warn">⚠️ 需提前預約</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=地焼うなぎ+法善寺+山かづ+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚇</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">JR 難波 → ユニバーサルシティ</span><span class="tl-time">19:15</span></div>
+        <div class="tl-note">JR 難波 → 西九条 → ユニバーサルシティ，約15分鐘直達</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約15分</span>
+          <span class="tl-tag tag-cost">¥180/人</span>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=JR難波駅&destination=ユニバーサルシティ駅&travelmode=transit" target="_blank">📍 路線</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-hotel">🏨</div><div class="tl-line"></div></div>
+      <div class="tl-card t-hotel">
+        <div class="tl-card-top"><span class="tl-name">The Park Front Hotel Check-in</span><span class="tl-time">19:30</span></div>
+        <div class="tl-note">吃飽喝足、行李到位，好好休息！明天 USJ 步行11分鐘就到，養精蓄銳準備迎接最刺激的一天！</div>
+        <div class="tl-meta"><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=The+Park+Front+Hotel+Universal+Studios+Japan" target="_blank">📍 地圖</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ DAY 4 ═══ -->
+<div class="section" id="day4">
+  <div class="day-header">
+    <div class="day-num d4-bg"><span class="n">4</span><span class="d">DAY</span></div>
+    <div>
+      <div class="day-title">日本環球影城 USJ 全天</div>
+      <div class="day-sub">06/02（二）｜住宿：The Park Front Hotel</div>
+      <div class="day-budget">當日預估：¥15,000–20,000／人（含門票快速通關）</div>
+    </div>
+  </div>
+
+  <div class="notice">✅ 已購買 Express Pass（快速通關）！以下時間表均為快通時間，請依序前往各設施感應入場。</div>
+  <div class="tip">💡 哈利波特區就算不搭設施，光拍照逛街＋喝奶油啤酒也非常值得！キノピオ・カフェ需提前用 USJ App 訂位，入園後第一件事先搶。</div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-hotel">🏨</div><div class="tl-line"></div></div>
+      <div class="tl-card t-hotel">
+        <div class="tl-card-top"><span class="tl-name">The Park Front Hotel 出發</span><span class="tl-time">07:00</span></div>
+        <div class="tl-note">步行11分鐘至 USJ 入口。建議帶雨衣、換洗衣物、充電寶。</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🎢</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">USJ 入園！前往好萊塢區小小兵</span><span class="tl-time">07:15</span></div>
+        <div class="tl-note">入園後立刻前往好萊塢區「小小兵樂園」，趁開園人潮最少時先玩！建議一入園就衝。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-cost">門票 ¥9,800–10,800/人</span>
+          <span class="tl-tag tag-tip">✅ Express Pass 已購買</span>
+          <span class="tl-tag tag-warn">⚠️ 提前官網購票，現場較貴且可能售罄</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Universal+Studios+Japan+Osaka" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🍌</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">小小兵瘋狂乘車遊（ミニオン・ハチャメチャ・ライド）</span><span class="tl-time">10:00</span></div>
+        <div class="tl-note">搭上小小兵飛行器，跟著小小兵們在格魯博士的秘密基地大冒險！超立體4D特效搭配水霧、震動，笑聲不斷。無入場時間限制，建議開園人少時先玩。刺激度低，長輩及小孩都適合！</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-tip">💡 無入場時間限制，開園後先衝！</span>
+          <span class="tl-tag tag-dur">⏱ 30分（含排隊）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🍌</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">小小兵任務（ミニオン・ハチャメチャ・ミッション）</span><span class="tl-time">10:30 – 11:00</span></div>
+        <div class="tl-note">與小小兵一起拯救世界的互動體驗設施！透過特殊眼鏡在360度環境中與小小兵互動，歡笑聲不斷，全家人都會愛。適合所有年齡層。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約30分（含排隊）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍌</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">小點｜小小兵香蕉爆米花</span><span class="tl-time">10:50</span></div>
+        <div class="tl-note">邊走邊吃！小小兵區限定的香蕉口味爆米花，裝在小小兵造型桶裡，甜滋滋香蕉香氣，超級可愛，邊逛邊拍。桶子可留作紀念品！</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-cost">¥600（含爆米花桶）</span>
+          <span class="tl-tag tag-tip">💡 前往哈利波特區途中順手買，不耽誤時間</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">⚡</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">哈利波特與禁忌之旅（ハリー・ポッター・アンド・ザ・フォービドゥン・ジャーニー）</span><span class="tl-time">11:00</span></div>
+        <div class="tl-note">USJ 最受歡迎設施之一！坐上魔法掃帚飛越霍格華茲城堡，躲避魔女、與鳳凰及龍共同冒險，完全沉浸在哈利波特魔法世界！進入後記得買奶油啤酒（Butterbeer）！</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分（快通入場）</span>
+          <span class="tl-tag tag-warn">⚠️ 有身高限制，請事先確認</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🦅</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">鷹馬的飛行・飛離霍格華茲（ハイポグリフ・フライト）</span><span class="tl-time">11:30 – 12:00</span></div>
+        <div class="tl-note">搭乘神奇動物「鷹馬」在霍格華茲城堡上空翱翔的戶外雲霄飛車！速度感十足但刺激度適中，哈利波特迷必玩。兒童亦可搭乘，長輩可視體能決定是否參與。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 30分（含排隊）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍽️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">午餐｜The Three Broomsticks（三根掃帚）</span><span class="tl-time">12:00 – 13:00</span></div>
+        <div class="tl-note">哈利波特區最具代表性的主題餐廳！霍格華茲大廳風格裝潢，烤雞腿、玉米棒、馬鈴薯泥是招牌餐點，份量紮實。<strong>必點：奶油啤酒（Butterbeer）¥950</strong>，甜蜜奶油泡沫＋薑汁氣泡底，有一般版、冰沙版兩種，每人都要喝！也可加點 <strong>南瓜汁（Pumpkin Juice）¥700</strong>，蘋果南瓜風味，HP 迷必嚐。紀念杯版本 ¥1,100，可留作紀念。<br><br>
+          🔁 <strong>備案｜好萊塢餐廳</strong>　園內最大餐廳，漢堡、咖哩、丼飯多種選擇，適合各年齡層，約¥1,500–2,000/人
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1小時</span>
+          <span class="tl-tag tag-cost">¥1,500–2,500/人（不含飲料）</span>
+          <span class="tl-tag tag-tip">💡 12:00–13:00 為用餐高峰，可稍早入座避開人潮</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">💧</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">水世界（ウォーターワールド）</span><span class="tl-time">13:00</span></div>
+        <div class="tl-note">以電影《未來水世界》為題材的超震撼水上特技表演！爆炸、噴水、特技演員從高空墜落等驚險場面連連，全程約20分鐘。坐前排保證全濕！夏天消暑必看，建議帶雨衣或換洗衣物備用。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分（含入場等候）</span>
+          <span class="tl-tag tag-warn">⚠️ 前排座位必定淋濕，雨衣必備！</span>
+          <span class="tl-tag tag-tip">💡 表演時間固定，出發前用 USJ 官方 App 確認當日場次</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🎭</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">園區遊行表演</span><span class="tl-time">14:00</span></div>
+        <div class="tl-note">USJ 定期舉辦主題遊行，各大電影角色與舞者沿好萊塢大道遊行！小小兵、哈利波特、咚奇剛等角色現身近距離互動，超適合拍照留念。建議提前15–20分鐘選好位置站定。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分</span>
+          <span class="tl-tag tag-tip">💡 遊行時間視當日安排，出發前確認官方 App</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🍄</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">進入超級任天堂世界（スーパー・ニンテンドー・ワールド）</span><span class="tl-time">15:00</span></div>
+        <div class="tl-note">全球最夢幻的遊戲主題樂園！配戴能量手環（Power-Up Band，¥3,980/個）可透過互動任務集章、打蘑菇、PK Boss，讓你真正活進馬力歐的遊戲世界！快通票已包含指定入場時段，依時段感應入場即可。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-cost">能量手環 ¥3,980/個（選購）</span>
+          <span class="tl-tag tag-tip">✅ 快通已含入場時段</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🔴</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">馬力歐賽車：庫巴的挑戰書（マリオカート：クッパの挑戦状）</span><span class="tl-time">15:00 – 15:30</span></div>
+        <div class="tl-note">全球最高科技 AR 賽車設施！戴上頭盔坐進卡丁車，與庫巴軍隊在城堡賽道上對決。頭盔內 AR 畫面結合實體場景，星星、砲彈即時飛過眼前，視覺震撼超越想像。全家互相比分，競爭氣氛熱烈！</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 30分（快通入場）</span>
+          <span class="tl-tag tag-tip">💡 分組比賽看誰得分高，家庭必玩！</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🦕</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">耀西冒險（ヨッシー・アドベンチャー）</span><span class="tl-time">15:30 – 16:00</span></div>
+        <div class="tl-note">騎著耀西的背上，穿越蘑菇王國尋找藏起來的蛋！色彩繽紛、搖搖晃晃的親子型軌道遊樂設施，刺激度低，老少咸宜。沿途可看見馬力歐、碧姬公主等角色，是拍照打卡的最佳機會。長輩友善，全家人都能一起乘坐！</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 30分（含排隊）</span>
+          <span class="tl-tag tag-tip">💡 刺激度低，長輩小孩都適合，必搭！</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🦍</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">咚奇剛的瘋狂礦車（ドンキーコング・カントリー）</span><span class="tl-time">16:00 – 16:30</span></div>
+        <div class="tl-note">2024年全新開幕！以「咚奇剛」為主題的叢林冒險，搭上礦山列車穿越叢林、飛越瀑布，上下起伏大、刺激感十足，是 USJ 目前最新且最熱門的設施之一！</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 30分（快通入場）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍄</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">小點｜キノピオ・カフェ（奇諾比奧咖啡廳）</span><span class="tl-time">16:30 – 16:50</span></div>
+        <div class="tl-note">超級任天堂世界內的主題咖啡廳！蘑菇造型漢堡、星星拿鐵、1-UP蘑菇甜點，每道餐點都超出片，IG 必拍。座位有限，<strong>需提前用 USJ 官方 App 預約時段</strong>，入園後第一時間搶訂！也有外帶版的小點心可直接購買。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-cost">¥800–1,500/人（視點餐）</span>
+          <span class="tl-tag tag-warn">⚠️ 需用 USJ App 預約座位，入園後立刻搶！</span>
+          <span class="tl-tag tag-tip">💡 沒訂到位也可買外帶點心邊逛邊吃</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🎪</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">空檔周邊小遊戲＋限定商品採購</span><span class="tl-time">16:50 – 17:30</span></div>
+        <div class="tl-note">利用空檔玩球場小遊戲（投球、射擊等），贏取 USJ 限定絨毛玩偶！也是採購伴手禮的好時機：馬力歐帽子、小小兵零食禮盒、哈利波特魔杖等都是熱門限定商品，售罄率高，建議下午提早採購。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 30分</span>
+          <span class="tl-tag tag-tip">💡 限定商品常斷貨，建議下午提早買！</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-sight">🦖</div><div class="tl-line"></div></div>
+      <div class="tl-card t-sight">
+        <div class="tl-card-top"><span class="tl-name">侏羅紀公園：乘船遊（ジュラシック・パーク・ザ・ライド）</span><span class="tl-time">18:00</span></div>
+        <div class="tl-note">搭乘圓形橡皮艇穿越侏羅紀公園，近距離遭遇迅猛龍與暴龍，最後15公尺急速俯衝、噴濺大量水花！夏天超消暑，刺激感極強。無入場時間限制，傍晚人潮較少。建議穿雨衣或攜帶換洗衣物備用。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 45分（含排隊）</span>
+          <span class="tl-tag tag-tip">💡 無入場時間限制，傍晚排隊較短！</span>
+          <span class="tl-tag tag-warn">⚠️ 保證全濕，雨衣必備</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍽️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">晚餐｜大阪環球城市步行街（ユニバーサル・シティウォーク大阪）</span><span class="tl-time">19:00 – 20:30</span></div>
+        <div class="tl-note">就在 USJ 出口旁！玩完直接走進來，不用移動。集合後挑選各自喜歡的餐廳，輕鬆收尾充實的一天！<br><br>
+          🥩 <strong>京都勝牛</strong>　京都發跡的頂級炸牛排專門店！使用和牛部位現炸，外酥內嫩，口感遠超一般豬排，套餐附白飯＋味噌湯，約¥1,500–3,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=京都勝牛+ユニバーサルシティウォーク" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>Shake Shack</strong>　紐約人氣連鎖，100% 新鮮牛肉 Smash Burger、奶昔、薯條，品質穩定，排隊也值得，約¥1,200–2,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Shake+Shack+ユニバーサルシティウォーク+大阪" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>会津屋</strong>　1935年創業的元祖たこ焼き老店！無美乃滋、無柴魚的清爽醬汁原味吃法，外皮微脆、內餡滑嫩，大阪章魚燒的根源就在這裡，約¥600–900/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=会津屋+ユニバーサルシティウォーク" target="_blank">📍 地圖</a><br><br>
+          🔁 <strong>壽司郎（スシロー）</strong>　日本最大迴轉壽司連鎖，新鮮食材、平價實惠，從鮭魚到海膽應有盡有，家族聚餐人人都能吃飽吃好，約¥1,000–2,000/人　<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=スシロー+ユニバーサルシティウォーク" target="_blank">📍 地圖</a>
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 1.5小時</span>
+          <span class="tl-tag tag-cost">¥600–3,000/人</span>
+          <span class="tl-tag tag-tip">💡 出 USJ 大門直走即到，各家餐廳風格不同可分頭去吃再集合</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ユニバーサルシティウォーク大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-hotel">🏨</div><div class="tl-line"></div></div>
+      <div class="tl-card t-hotel">
+        <div class="tl-card-top"><span class="tl-name">【全員】返回飯店</span><span class="tl-time">21:00</span></div>
+        <div class="tl-note">好好休息！明天還要購物。回來後可在飯店附近便利商店買宵夜。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ DAY 5 ═══ -->
+<div class="section" id="day5">
+  <div class="day-header">
+    <div class="day-num d5-bg"><span class="n">5</span><span class="d">DAY</span></div>
+    <div>
+      <div class="day-title">Rinku Premium Outlets・返台</div>
+      <div class="day-sub">06/03（三）｜BR129 返回桃園</div>
+      <div class="day-budget">當日預估：¥3,000–5,000 ＋ 購物費用</div>
+    </div>
+  </div>
+
+  <div class="tip">💡 Rinku Premium Outlets 就在關西機場旁！走路或搭免費接駁就能到機場，掃貨完直接出發超方便！記得預留退稅時間。</div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-food">🍳</div><div class="tl-line"></div></div>
+      <div class="tl-card t-food">
+        <div class="tl-card-top"><span class="tl-name">早餐</span><span class="tl-time">07:30 – 08:20</span></div>
+        <div class="tl-note">☕ <strong>Tully's Coffee</strong>　日本連鎖咖啡廳，環境舒適、氣氛輕鬆，最後一天早晨來杯咖啡配輕食收個心再出發！拿鐵、卡布奇諾品質穩定，搭配三明治、可頌、鬆餅等早餐輕食，約¥600–1,200/人</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 50分</span>
+          <span class="tl-tag tag-cost">¥600–1,200/人</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Tully%27s+Coffee+ユニバーサルシティ+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-hotel">🏨</div><div class="tl-line"></div></div>
+      <div class="tl-card t-hotel">
+        <div class="tl-card-top"><span class="tl-name">The Park Front Hotel 退房</span><span class="tl-time">08:30</span></div>
+        <div class="tl-note">10:00 前退房。行李可拖至 JR 站放置，或直接帶著去 Rinku Outlets。</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🚇</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">ユニバーサルシティ → りんくうタウン（JR）</span><span class="tl-time">09:00</span></div>
+        <div class="tl-note">JR ユニバーサルシティ→西九条→天王寺→日根野→りんくうタウン，約50–60分鐘（可直達）</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 約55分</span>
+          <span class="tl-tag tag-cost">¥850/人</span>
+          <a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=ユニバーサルシティ駅&destination=りんくうタウン駅&travelmode=transit" target="_blank">📍 路線</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-transport">🧳</div><div class="tl-line"></div></div>
+      <div class="tl-card t-transport">
+        <div class="tl-card-top"><span class="tl-name">行李寄放｜りんくうタウン駅 人工寄放處</span><span class="tl-time">10:00</span></div>
+        <div class="tl-note">抵達後先寄放行李，輕裝逛 Outlets！站內共有三個人工寄放點，均為 10:00 開始營業：<br><br>
+          📍 <strong>出改札口左前方</strong>　¥300/件　10:00–20:00　最便宜、最推薦<br><br>
+          📍 <strong>出改札口直走到底</strong>　¥400/件　10:00–19:30<br><br>
+          📍 <strong>観光案内所「まち処」（出改札口正對面）</strong>　¥500/件　10:00–19:00
+        </div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-cost">¥300–500/件</span>
+          <span class="tl-tag tag-tip">💡 7人行李多建議用改札口左前方（最便宜），取件後直接走去機場</span>
+          <span class="tl-tag tag-warn">⚠️ 三處均 10:00 才開始，抵站後稍等片刻</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=りんくうタウン駅+手荷物預かり" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-shop">🛍️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-shop">
+        <div class="tl-card-top"><span class="tl-name">Rinku Premium Outlets</span><span class="tl-time">10:00</span></div>
+        <div class="tl-note">超過200間品牌，Coach、Furla、Michael Kors、Nike、Adidas 等均有折扣。就在關西機場旁，購物完走路或接駁至機場非常順路。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-dur">⏱ 4–5小時</span>
+          <span class="tl-tag tag-cost">依個人消費</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=りんくうプレミアム・アウトレット+大阪" target="_blank">📍 地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-flight">✈️</div><div class="tl-line"></div></div>
+      <div class="tl-card t-flight">
+        <div class="tl-card-top"><span class="tl-name">關西機場 KIX T1 辦理登機・退稅</span><span class="tl-time">16:00</span></div>
+        <div class="tl-note">⚠️ 退稅要在安檢前辦理，記得帶護照和購物收據（需¥5,000以上免稅）。建議至少提前2.5小時到機場。</div>
+        <div class="tl-meta">
+          <span class="tl-tag tag-warn">⚠️ 退稅截止：安檢前</span>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Kansai+International+Airport" target="_blank">📍 機場地圖</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot t-flight">🛫</div><div class="tl-line"></div></div>
+      <div class="tl-card t-flight">
+        <div class="tl-card-top"><span class="tl-name">長榮航空 BR129 起飛</span><span class="tl-time">18:30</span></div>
+        <div class="tl-note">關西 KIX → 桃園 TPE T2，飛行約2小時35分</div>
+        <div class="tl-meta"><span class="tl-tag tag-tip">預計 20:30 抵達桃園</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</div></div><!-- end panel-schedule -->
+
+<!-- ═══ TAB：預算 ═══ -->
+<div class="tab-panel" id="panel-budget">
+<div class="wrap">
+<!-- ═══ 預算總覽 ═══ -->
+<div class="section" id="budget">
+  <div class="section-title">💰 預算總覽</div>
+
+  <div class="grand-total" style="margin-bottom:16px">
+    <div>
+      <div class="gt-label">一人交通＋餐飲預估</div>
+      <div style="font-size:0.78rem;opacity:.6;margin-top:4px">不含購物・景點門票・機票・住宿</div>
+    </div>
+    <div class="gt-nums">
+      <div class="gt-item"><div class="amt">¥21,000–38,000</div><div class="cur">JPY 每人</div></div>
+      <div class="gt-item"><div class="amt">NT$4,600–8,300</div><div class="cur">TWD 每人</div></div>
+    </div>
+  </div>
+
+  <table class="exp-table">
+    <thead>
+      <tr><th>天數</th><th>交通費（JPY）</th><th>餐飲費（JPY）</th><th>備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Day 1　難波・心齋橋</td><td class="amount">¥1,000–1,500</td><td class="amount">¥4,000–8,000</td><td>壽喜燒晚餐為大頭</td></tr>
+      <tr><td>Day 2　勝尾寺・梅田</td><td class="amount">¥1,500–2,000</td><td class="amount">¥3,000–5,000</td><td>箕面巴士含</td></tr>
+      <tr><td>Day 3　黑門・天王寺・阿倍野・通天閣</td><td class="amount">¥500–800</td><td class="amount">¥4,000–8,000</td><td>黑門小食＋串炸＋晚餐</td></tr>
+      <tr><td>Day 4　USJ</td><td class="amount">¥200–500</td><td class="amount">¥4,000–8,000</td><td>園內餐飲＋CityWalk晚餐</td></tr>
+      <tr><td>Day 5　臨空城・返台</td><td class="amount">¥1,500–2,000</td><td class="amount">¥1,500–3,000</td><td>JR車費＋行李寄放含</td></tr>
+      <tr><td><strong>合計</strong></td><td class="amount"><strong>¥4,700–6,800</strong></td><td class="amount"><strong>¥16,500–32,000</strong></td><td><strong>總計 ¥21,000–38,000</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip" style="margin-top:12px">💡 建議每人準備 <strong>¥30,000–40,000</strong> 日幣現金應付交通與餐飲，信用卡為輔。退稅可省 8–10%，購物後記得保留收據。</div>
+</div>
+
+</div></div><!-- end panel-budget -->
+
+<!-- ═══ TAB：行李 ═══ -->
+<div class="tab-panel" id="panel-luggage">
+<div class="wrap">
+<!-- ═══ 行李清單 ═══ -->
+<div class="section" id="checklist">
+  <div class="section-title">🧳 行前準備 ＆ 行李清單</div>
+
+  <div class="checklist-grid">
+    <div class="check-group">
+      <h4>📄 重要文件</h4>
+      <div class="check-item"><input type="checkbox" id="c1"><label for="c1">護照</label></div>
+      <div class="check-item"><input type="checkbox" id="c2"><label for="c2">身分證</label></div>
+      <div class="check-item"><input type="checkbox" id="c3"><label for="c3">登機證／機票證明</label></div>
+      <div class="check-item"><input type="checkbox" id="c4"><label for="c4">信用卡</label></div>
+      <div class="check-item"><input type="checkbox" id="c5"><label for="c5">日幣現金</label></div>
+      <div class="check-item"><input type="checkbox" id="c6"><label for="c6">飯店預訂單</label></div>
+      <div class="check-item"><input type="checkbox" id="c7"><label for="c7">USJ 門票／快通</label></div>
+      <div class="check-item"><input type="checkbox" id="c8"><label for="c8">旅遊保險</label></div>
+      <div class="check-item"><input type="checkbox" id="c9"><label for="c9">交通卡</label></div>
+    </div>
+    <div class="check-group">
+      <h4>📱 電子設備</h4>
+      <div class="check-item"><input type="checkbox" id="c10"><label for="c10">手機</label></div>
+      <div class="check-item"><input type="checkbox" id="c11"><label for="c11">eSIM</label></div>
+      <div class="check-item"><input type="checkbox" id="c12"><label for="c12">行動電源（建議用夾鏈袋＋絕緣膠帶，要有 Wh 標示）</label></div>
+      <div class="check-item"><input type="checkbox" id="c13"><label for="c13">充電器</label></div>
+      <div class="check-item"><input type="checkbox" id="c14"><label for="c14">萬國插頭</label></div>
+      <div class="check-item"><input type="checkbox" id="c15"><label for="c15">相機</label></div>
+      <div class="check-item"><input type="checkbox" id="c16"><label for="c16">記憶卡</label></div>
+      <div class="check-item"><input type="checkbox" id="c17"><label for="c17">備用電池</label></div>
+    </div>
+    <div class="check-group">
+      <h4>👕 衣物（5天4夜）</h4>
+      <div class="check-item"><input type="checkbox" id="c14"><label for="c14">短袖 × 2–3件</label></div>
+      <div class="check-item"><input type="checkbox" id="c15"><label for="c15">薄外套 × 1件（室內冷氣強）</label></div>
+      <div class="check-item"><input type="checkbox" id="c16"><label for="c16">好走的鞋</label></div>
+      <div class="check-item"><input type="checkbox" id="c17"><label for="c17">USJ用雨衣（水上設施必備）</label></div>
+    </div>
+    <div class="check-group">
+      <h4>💊 藥品 ＆ 個人用品</h4>
+      <div class="check-item"><input type="checkbox" id="c20"><label for="c20">牙刷／牙膏／牙線</label></div>
+      <div class="check-item"><input type="checkbox" id="c21"><label for="c21">藥物（止痛藥／胃藥／感冒藥／過敏藥）</label></div>
+      <div class="check-item"><input type="checkbox" id="c22"><label for="c22">衛生紙／濕紙巾／酒精式濕紙巾</label></div>
+      <div class="check-item"><input type="checkbox" id="c23"><label for="c23">保養品（化妝水／乳液／精華液）</label></div>
+      <div class="check-item"><input type="checkbox" id="c24"><label for="c24">隱形眼鏡／眼鏡／眼藥水</label></div>
+      <div class="check-item"><input type="checkbox" id="c25"><label for="c25">折疊傘</label></div>
+      <div class="check-item"><input type="checkbox" id="c26"><label for="c26">衛生用品</label></div>
+      <div class="check-item"><input type="checkbox" id="c27"><label for="c27">口罩</label></div>
+      <div class="check-item"><input type="checkbox" id="c28"><label for="c28">梳子</label></div>
+      <div class="check-item"><input type="checkbox" id="c29"><label for="c29">吹風機</label></div>
+      <div class="check-item"><input type="checkbox" id="c30"><label for="c30">刮鬍刀／小剪刀／指甲刀</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 實用資訊 ═══ -->
+<div class="section" id="practical">
+  <div class="section-title">📋 實用資訊</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>📶 上網方案</h4>
+      <div class="info-row"><strong>eSIM：DJB 暢日卡 PLUS</strong><br>5天吃到飽不降速，每人一張，出發前下載啟用，到日本直接開用，免換卡免帶分享器</div>
+    </div>
+    <div class="info-card">
+      <h4>💱 換匯建議</h4>
+      <div class="info-row"><strong>換匯地點：</strong>台灣銀行、兆豐銀行匯率最好，出發前1–2天換</div>
+      <div class="info-row"><strong>建議金額：</strong>每人 ¥60,000–80,000（含購物預算）</div>
+      <div class="info-row"><strong>信用卡：</strong>VISA/Master 大部分店家接受，USJ、百貨公司必可刷</div>
+      <div class="info-row"><strong>注意：</strong>小型餐廳、神社、市集多為現金，建議帶夠現金備用</div>
+    </div>
+    <div class="info-card">
+      <h4>🚇 交通 ICOCA 卡</h4>
+      <div class="info-row"><strong>購買地點：</strong>KIX 機場服務台或自動售票機</div>
+      <div class="info-row"><strong>初次購買：</strong>¥2,000（¥500押金＋¥1,500）建議充值 ¥5,000</div>
+      <div class="info-row"><strong>可使用範圍：</strong>大阪地鐵、JR西日本、阪急、近鐵、便利商店</div>
+      <div class="info-row"><strong>退卡：</strong>回台前可在JR西日本窗口退押金¥500（扣手續費¥220）</div>
+    </div>
+    <div class="info-card">
+      <h4>🏥 保險 ＆ 緊急聯絡</h4>
+      <div class="info-row"><strong>旅遊保險：</strong>強烈建議購買，含旅行不便險、醫療險</div>
+      <div class="info-row"><strong>日本緊急電話：</strong>110（警察）/ 119（救護車）</div>
+      <div class="info-row"><strong>台灣急難救助：</strong>+81-6-4301-7373（大阪辦事處）</div>
+      <div class="info-row"><strong>長輩注意：</strong>攜帶個人病歷摘要（英文版），備好藥品清單</div>
+    </div>
+    <div class="info-card">
+      <h4>🌧️ 天氣 ＆ 穿著</h4>
+      <div class="info-row"><strong>5月底–6月初：</strong>梅雨季前期，氣溫 22–30°C</div>
+      <div class="info-row"><strong>降雨機率：</strong>較高，摺疊傘必備</div>
+      <div class="info-row"><strong>穿著：</strong>短袖為主，室內冷氣強，薄外套必備</div>
+      <div class="info-row"><strong>長輩注意：</strong>防滑鞋（勝尾寺石階）、防曬帽、小摺疊椅（選配）</div>
+    </div>
+    <div class="info-card">
+      <h4>🛒 退稅注意事項</h4>
+      <div class="info-row"><strong>免稅門檻：</strong>同一店家單日消費 ¥5,000 以上（稅前）</div>
+      <div class="info-row"><strong>辦理方式：</strong>結帳時出示護照，店家直接免稅結帳</div>
+      <div class="info-row"><strong>機場退稅：</strong>已加稅購買的商品，在機場出境前辦理退稅</div>
+      <div class="info-row"><strong>注意：</strong>免稅商品需裝袋封條，出境前不可開封使用</div>
+    </div>
+    <div class="info-card">
+      <h4>🍱 飲食小建議</h4>
+      <div class="info-row"><strong>早餐：</strong>便利商店（7-11、Family Mart、Lawson）超好吃又便宜</div>
+      <div class="info-row"><strong>中午：</strong>定食午餐最划算，¥800–1,200 含湯飯</div>
+      <div class="info-row"><strong>宵夜：</strong>道頓堀周邊24小時選擇多</div>
+      <div class="info-row"><strong>長輩注意：</strong>日本料理較鹹，飲水充足，注意血壓</div>
+    </div>
+    <div class="info-card">
+      <h4>📱 推薦 App</h4>
+      <div class="info-row"><strong>交通：</strong>Google Maps（必裝）、乗換案内</div>
+      <div class="info-row"><strong>翻譯：</strong>Google翻譯（相機掃描菜單超好用）</div>
+      <div class="info-row"><strong>訂位：</strong>一食pass（日本餐廳訂位）、yelp</div>
+      <div class="info-row"><strong>天氣：</strong>Weather Japan、tenki.jp</div>
+    </div>
+  </div>
+</div>
+
+</div></div><!-- end panel-luggage -->
+
+<!-- ═══ 底部導覽列 ═══ -->
+<nav class="bottom-nav no-print">
+  <button class="bn-btn active" id="btn-schedule" onclick="showTab('schedule')">
+    <span class="bn-icon">🗓</span><span class="bn-label">每日行程</span>
+  </button>
+  <button class="bn-btn" id="btn-flights" onclick="showTab('flights')">
+    <span class="bn-icon">✈️</span><span class="bn-label">航班</span>
+  </button>
+  <button class="bn-btn" id="btn-hotels" onclick="showTab('hotels')">
+    <span class="bn-icon">🏨</span><span class="bn-label">住宿</span>
+  </button>
+  <button class="bn-btn" id="btn-luggage" onclick="showTab('luggage')">
+    <span class="bn-icon">🧳</span><span class="bn-label">行李</span>
+  </button>
+  <button class="bn-btn" id="btn-budget" onclick="showTab('budget')">
+    <span class="bn-icon">💰</span><span class="bn-label">預算</span>
+  </button>
+</nav>
+
+<script>
+// ── Tab switching ──
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.bn-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('btn-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── Day selector (scroll to day within schedule tab) ──
+function scrollDay(dayId, btn) {
+  document.querySelectorAll('.ds-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const el = document.getElementById(dayId);
+  if (el) {
+    const offset = el.getBoundingClientRect().top + window.scrollY - 58;
+    window.scrollTo({ top: offset, behavior: 'smooth' });
+  }
+}
+
+// ── Update day selector highlight on scroll ──
+window.addEventListener('scroll', function() {
+  if (!document.getElementById('panel-schedule').classList.contains('active')) return;
+  const days = ['day1','day2','day3','day4','day5'];
+  const btns = document.querySelectorAll('.ds-btn');
+  let current = 0;
+  days.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) current = i;
+  });
+  btns.forEach((b, i) => b.classList.toggle('active', i === current));
+});
+
+// ── Checkbox persistence ──
+document.querySelectorAll('.check-item input[type=checkbox]').forEach(cb => {
+  const saved = localStorage.getItem(cb.id);
+  if(saved === 'true') { cb.checked = true; cb.closest('.check-item').style.opacity = '0.5'; }
+  cb.addEventListener('change', function(){
+    localStorage.setItem(this.id, this.checked);
+    this.closest('.check-item').style.opacity = this.checked ? '0.5' : '1';
+  });
+});
+</script>
+</body>
+</html>
